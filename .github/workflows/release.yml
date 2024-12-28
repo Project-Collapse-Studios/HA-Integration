@@ -8,7 +8,7 @@ jobs:
     name: Release
     steps:
       - name: Start ssh-agent
-        run: ssh-agent -s
+        run: eval 'ssh-agent -s'
       - name: Add SSH permissions for git
         run: ssh-add - <<< '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
       - name: Checkout
