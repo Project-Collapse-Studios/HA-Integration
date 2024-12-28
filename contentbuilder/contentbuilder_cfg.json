@@ -1,0 +1,39 @@
+{
+    "workingdir": "HA-Integration",
+    "exportdir": "build/",
+    "export": [
+        {
+            "path_relative": "HammerAddons/hammer",
+            "path": "HammerAddons/hammer/",
+            "export_all": true
+        },
+        {
+            "path_relative": "FGD/hammer",
+            "path": "FGD/hammer",
+            "export_all": true,
+
+            "blacklist": {
+                "folders": [
+                    "cfg_momentum",
+                    "cfg_p2ce",
+                    "cfg_templategame"
+                ]
+            }
+        },
+        {
+            "path_relative": "psc-cfg",
+            "path": "psc-cfg",
+            "export_all": true,
+
+            "blacklist": {
+                "files": [
+                    "README.md"
+                ],
+                "folders": [
+                    ".git"
+                ]
+            }
+        }
+    ]
+
+}
