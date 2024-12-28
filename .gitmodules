@@ -1,0 +1,6 @@
+[submodule "HammerAddons"]
+	path = HammerAddons
+	url = git@github.com:Project-Collapse-Studios/HammerAddons.git
+[submodule "FGD"]
+	path = FGD
+	url = git@github.com:Project-Collapse-Studios/FGD.git
