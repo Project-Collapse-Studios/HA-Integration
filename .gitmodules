@@ -4,3 +4,6 @@
 [submodule "FGD"]
 	path = FGD
 	url = git@github.com:Project-Collapse-Studios/FGD.git
+[submodule "psc-cfg"]
+	path = psc-cfg
+	url = ssh://git@ssh.project-collapse-studios.org:1206/PCS/hammer.git
