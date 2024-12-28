@@ -1,0 +1,43 @@
+name: Release
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Release
+    steps:
+      - name: Start ssh-agent
+        run: ssh-agent -s
+      - name: Add SSH permissions for git
+        run: ssh-add - <<< '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-depency-path: 'requirements.txt'
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Build folder
+        run: .\build.bat
+
+      - name: Zip
+        uses: TheDoctor0/zip-release@master
+        with:
+          filename: hammer.zip
+          path: ./build/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hammer
+          path: hammer.zip
+        
