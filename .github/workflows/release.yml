@@ -7,13 +7,10 @@ jobs:
     runs-on: windows-latest
     name: Release
     steps:
-      - name: Start ssh-agent
-        run: eval 'ssh-agent -s'
-      - name: Add SSH permissions for git
-        run: ssh-add - <<< '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ssh-key: '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
           submodules: 'true'
 
       - name: Setup Python
