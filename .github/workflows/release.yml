@@ -10,23 +10,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout submodule FGD
-        uses: actions/checkout@v4
-        with:
-          repository: ./FGD/
+      - name: CheckoutSubmodules
+        run: git submodule update --init FGD HammerAddons
+        
+      - name: Add ssh-key
+        run: ssh-add - <<< '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
 
-      - name: Checkout submodule HammerAddons
-        uses: actions/checkout@v4
-        with:
-          repository: ./HammerAddons/
-
-      - name: Checkout submodule psc-cfg
-        uses: actions/checkout@v4
-        with:
-          repository: ./psc-cfg/
-          ssh-key: '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
-          
-
+      - name: Checkout PSC-CFG
+        run: git submodule update --init psc-cfg
+        
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
