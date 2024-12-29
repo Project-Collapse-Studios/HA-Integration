@@ -9,23 +9,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ssh-key: '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
-          ssh-strict: 'false'
-          submodules: 'true'
         
-#      - name: CheckoutSubmodules
-#        run: git submodule update --init FGD HammerAddons
+      - name: CheckoutSubmodules
+        run: git submodule update --init FGD HammerAddons
 
-#      - name: Add SSH permissions
-#        shell: cmd
-#        run: |
-#          mkdir $HOME\.ssh\
-#          echo|set /p w="${{ secrets.PSCGIT_HAMMER_SSHKEY }}" > $HOME\.ssh\id_rsa
-#          echo "${{ secrets.SSH_RSA_PCS_FINGERPRINT }}" >> $HOME/.ssh/known_hosts
-#        
-#      - name: Checkout PSC-CFG
-#        run: git submodule update --init psc-cfg
+      - name: Add SSH permissions
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: "${{ secrets.PSCGIT_HAMMER_SSHKEY }}"
+
+      - name: Add SSH fingerprints
+        run: |
+          echo '${{ secrets.SSH_RSA_PCS_FINGERPRINT }}' >> $HOME\.ssh\known_hosts
+          
+      - name: Checkout PSC-CFG
+        run: git submodule update --init psc-cfg
         
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -40,15 +38,18 @@ jobs:
       - name: Build folder
         run: .\build.bat
 
-      - name: Zip
-        uses: TheDoctor0/zip-release@master
-        with:
-          filename: hammer.zip
-          path: ./build/
+      - name: Clone hammer/ from PCS GIT
+        run: git clone -b release --single-branch ssh://git@ssh.project-collapse-studios.org:1206/PCS/hammer.git hammer-release
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: hammer
-          path: hammer.zip
+      - name: Clean repo and upload
+        run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "bot@github.com"
+          cd hammer-release
+          git rm .
+          git revert README.md
+          robocopy .\..\build\ .\ /S
+          git add .
+          git commit -m "Update hammer/"
+          git push
         
