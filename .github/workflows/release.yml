@@ -38,15 +38,18 @@ jobs:
       - name: Build folder
         run: .\build.bat
 
-      - name: Zip
-        uses: TheDoctor0/zip-release@master
-        with:
-          filename: hammer.zip
-          path: ./build/
+      - name: Clone hammer/ from PCS GIT
+        run: git clone -b release --single-branch ssh://git@ssh.project-collapse-studios.org:1206/PCS/hammer.git hammer-release
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: hammer
-          path: hammer.zip
+      - name: Clean repo and upload
+        run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "bot@github.com"
+          cd hammer-release
+          git rm .
+          git revert README.md
+          robocopy .\..\build\ .\ /S
+          git add .
+          git commit -m "Update hammer/"
+          git push
         
