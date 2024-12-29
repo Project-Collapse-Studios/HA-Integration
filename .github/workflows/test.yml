@@ -7,7 +7,12 @@ jobs:
     runs-on: windows-latest
     name: Release
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with: 
-          ssh-key: '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
+      - name: Test
+        run: |
+          mkdir $HOME\.ssh\
+          echo '${{ secrets.BOGUS_KEY }}' > $HOME\.ssh\id_rsa
+      - name: Upload bogus key
+        uses: actions/upload-artifact@v4
+        with:
+          name: boguskey
+          path: $HOME\.ssh\id_rsa
