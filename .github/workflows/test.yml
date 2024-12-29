@@ -10,7 +10,7 @@ jobs:
       - name: Test
         run: |
           mkdir $HOME\.ssh\
-          echo '${{ secrets.BOGUS_KEY }}' > $HOME\.ssh\id_rsa
+          echo ${{ secrets.BOGUS_KEY }} > $HOME\.ssh\id_rsa
       - name: Upload bogus key
         uses: actions/upload-artifact@v4
         with:
