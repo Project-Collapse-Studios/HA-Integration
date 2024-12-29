@@ -15,4 +15,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: boguskey
-          path: $HOME\.ssh\id_rsa
+          path: C:\Users\runneradmin\.ssh\id_rsa
