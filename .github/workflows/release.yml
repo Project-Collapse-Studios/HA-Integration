@@ -17,6 +17,7 @@ jobs:
         run: |
           mkdir $HOME\.ssh\
           echo '${{ secrets.PSCGIT_HAMMER_SSHKEY }}' > $HOME\.ssh\id_rsa
+          ssh-keyscan -t rsa ssh.project-collapse-studios.org >> $HOME/.ssh/known_hosts
         
       - name: Checkout PSC-CFG
         run: git submodule update --init psc-cfg
