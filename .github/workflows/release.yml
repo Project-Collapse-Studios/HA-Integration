@@ -9,23 +9,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ssh-key: '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
-          ssh-strict: 'false'
-          submodules: 'true'
         
-#      - name: CheckoutSubmodules
-#        run: git submodule update --init FGD HammerAddons
+      - name: CheckoutSubmodules
+        run: git submodule update --init FGD HammerAddons
 
-#      - name: Add SSH permissions
-#        shell: cmd
-#        run: |
-#          mkdir $HOME\.ssh\
-#          echo|set /p w="${{ secrets.PSCGIT_HAMMER_SSHKEY }}" > $HOME\.ssh\id_rsa
-#          echo "${{ secrets.SSH_RSA_PCS_FINGERPRINT }}" >> $HOME/.ssh/known_hosts
-#        
-#      - name: Checkout PSC-CFG
-#        run: git submodule update --init psc-cfg
+      - name: Add SSH permissions
+        shell: cmd
+        run: |
+          mkdir $HOME\.ssh\
+          python .\ssh_man.py "$HOME" "${{ secrets.PSCGIT_HAMMER_SSHKEY }}"
+          echo "${{ secrets.SSH_RSA_PCS_FINGERPRINT }}" >> $HOME/.ssh/known_hosts
+        
+      - name: Checkout PSC-CFG
+        run: git submodule update --init psc-cfg
         
       - name: Setup Python
         uses: actions/setup-python@v5
