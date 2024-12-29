@@ -14,6 +14,7 @@ jobs:
         run: git submodule update --init FGD HammerAddons
 
       - name: Add SSH permissions
+        shell: cmd
         run: |
           mkdir $HOME\.ssh\
           echo|set /p w="${{ secrets.PSCGIT_HAMMER_SSHKEY }}" > $HOME\.ssh\id_rsa
