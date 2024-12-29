@@ -130,7 +130,7 @@ def DetermineFullCWD(name: str):
         return
 
 
-    parentlist = list(cwd.parents) + [cwd]
+    parentlist = [cwd] + list(cwd.parents)
     for p in parentlist:
         if str(p.stem) == name:
             w_dir = p
