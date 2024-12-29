@@ -10,12 +10,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-#      - name: CheckoutSubmodules
-#        run: git submodule update --init FGD HammerAddons
+      - name: Add SSH permissions
+        run: echo '${{ secrets.PSCGIT_HAMMER_SSHKEY }}' > $HOME\.ssh\id_rsa
         
-      - name: Add ssh-key
-        run: ssh-add - <<< '${{ secrets.PSCGIT_HAMMER_SSHKEY }}'
-
+      - name: CheckoutSubmodules
+        run: git submodule update --init FGD HammerAddons
+        
       - name: Checkout PSC-CFG
         run: git submodule update --init psc-cfg
         
