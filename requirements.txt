@@ -3,4 +3,4 @@ colorama
 pyinstaller
 versioningit
 
--r HammerAddons\requirements.txt
+-r HammerAddons/requirements.txt
