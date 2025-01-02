@@ -19,7 +19,8 @@ python .\contentbuilder\ContentBuilder.py --filemanifest .\contentbuilder\conten
 
 
 echo Building postcompiler
-pyinstaller --distpath build/ --workpath pc_build -y HammerAddons/postcompiler.spec
+cd HammerAddons\src
+python -m PyInstaller --distpath ../../build/ --workpath ../../pc_build -y ../postcompiler.spec
 
 echo Finished!
 pause
