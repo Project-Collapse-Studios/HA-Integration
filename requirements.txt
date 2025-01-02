@@ -2,3 +2,5 @@ git+https://github.com/Project-Collapse-Studios/srctools.git
 colorama
 pyinstaller
 versioningit
+
+-r HammerAddons\requirements.txt
