@@ -1,0 +1,8 @@
+version: 2
+updates:
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    ignore:
+      - dependency-name: "psc-cfg"
+    schedule:
+      interval: "daily"
